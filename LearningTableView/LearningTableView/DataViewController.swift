@@ -3,33 +3,38 @@
 //  LearningTableView
 //
 //  Created by HYUBYN on 11/28/15.
-//  Copyright © 2015 PinRide. All rights reserved.
 //
 
 import UIKit
+//import DetailViewController
 
-class DataViewController: UIViewController {
-
+ class DataViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var actionButton: UIButton!
+    var myArray = [Int]()
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        for index in 1...10{
+            myArray.append(index);
+        }
+        
         // Do any additional setup after loading the view.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return myArray.count
+    }
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .Default, reuseIdentifier: "cell-asdfasdf")
+        cell.textLabel?.text = "\(myArray[indexPath.row])"
+        
+        return cell
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let detailView = storyboard?.instantiateViewControllerWithIdentifier("showDetail") as! DetailViewController
+        detailView.setLabelText("\(myArray[indexPath.row])")
+        navigationController?.pushViewController(detailView, animated: true)
     }
-    */
 
 }
